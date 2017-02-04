@@ -1,6 +1,6 @@
 open Formulas
 
-(* Uses naive simplification of the prove of a formula x to prove it. *)
+(* Uses naive simplification of a formula, converting to CNF as we go, to prove it. *)
 let rec prove x =
     let prove' x' =
         match x' with
@@ -32,7 +32,7 @@ let rec prove x =
         | Or(p, Not(q))     -> if p = q then True else x'
         | Or(Not(p), q)     -> if p = q then True else x'
 
-        (* Push disjunctions in until we only have them apply to literals to obtains CNF form. *)
+        (* Push disjunctions in until we only have them apply to literals to obtain CNF form. *)
         | Or(And(p, q), r)  -> prove (And(Or(p, r), Or(q, r)))
         | Or(p, And(q, r))  -> prove (And(Or(p, q), Or(p, r)))
 
