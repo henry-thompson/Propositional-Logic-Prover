@@ -1,17 +1,17 @@
 open Formulas
 
-(* Uses naive simplification of a formula, converting to CNF as we go, to prove it. *)
-let rec prove x =
-    let prove' x' =
+(* Uses naive simplification of a formula, converting to CNF as we go, to cnf it. *)
+let rec cnf x =
+    let cnf' x' =
         match x' with
         (* Remove implications. *)
-        | Implication(p, q) -> prove (Or(Not p, q))
-        | Iff(p, q)         -> prove (And(Or(Not p, q), Or(Not q, p)))
+        | Implication(p, q) -> cnf (Or(Not p, q))
+        | Iff(p, q)         -> cnf (And(Or(Not p, q), Or(Not q, p)))
 
         (* Push in negations. *)
         | Not(Not(p))       -> p
-        | Not(And(p, q))    -> prove (Or(Not p, Not q))
-        | Not(Or(p, q))     -> prove (And(Not p, Not q))
+        | Not(And(p, q))    -> cnf (Or(Not p, Not q))
+        | Not(Or(p, q))     -> cnf (And(Not p, Not q))
         
         (* Simplify conjunctions. *)
         | And(True, True)   -> True
@@ -33,11 +33,11 @@ let rec prove x =
         | Or(Not(p), q)     -> if p = q then True else x'
 
         (* Push disjunctions in until we only have them apply to literals to obtain CNF form. *)
-        | Or(And(p, q), r)  -> prove (And(Or(p, r), Or(q, r)))
-        | Or(p, And(q, r))  -> prove (And(Or(p, q), Or(p, r)))
+        | Or(And(p, q), r)  -> cnf (And(Or(p, r), Or(q, r)))
+        | Or(p, And(q, r))  -> cnf (And(Or(p, q), Or(p, r)))
 
         | Or(p, q)          -> if p = q then p else x'
 
         | _                 -> x'
     
-    in mapf prove' x;;
+    in mapf cnf' x;;
