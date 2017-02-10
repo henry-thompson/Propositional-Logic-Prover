@@ -1,6 +1,6 @@
 open Formulas
 
-(* Uses naive simplification of a formula, converting to CNF as we go, to cnf it. *)
+(* Simplifies the formula bottom up, converting to CNF and using known identities. *)
 let rec cnf x =
     let cnf' x' =
         match x' with
@@ -41,3 +41,6 @@ let rec cnf x =
         | _                 -> x'
     
     in mapf cnf' x;;
+
+(* true if the formula x is a tautology; else evaluates to false *)
+let prove x = if (cnf x) = True then true else false;;
