@@ -43,4 +43,4 @@ let rec cnf x =
     in mapf cnf' x;;
 
 (* true if the formula x is a tautology; else evaluates to false *)
-let prove x = if (cnf x) = True then true else false;;
+let prove x = (cnf x) = True;;
