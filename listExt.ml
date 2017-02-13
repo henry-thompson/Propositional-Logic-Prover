@@ -7,7 +7,7 @@ let filter_map f xs =
         | []      -> accum
         | (n::ns) ->
             match (f n) with
-            | Some(value) -> iter zs (value::accum)
-            | None    -> iter zs accum
+            | Some(value) -> iter ns (value::accum)
+            | None        -> iter ns accum
     in
     iter xs [];;
