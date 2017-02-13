@@ -1,9 +1,9 @@
-(* A constant term in propositional logic *)
-type term = string
+(* The name of an atomic symbol in propositional logic *)
+type identifier = string
 
 (* A propositional logic formula *)
 type formula =
-   | Term        of term
+   | Atom        of identifier
    | And         of formula * formula
    | Or          of formula * formula
    | Not         of formula
