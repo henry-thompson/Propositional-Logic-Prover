@@ -12,5 +12,14 @@ type formula =
    | True
    | False
 
-(* Helper function for mapping over every term in a formula. *)
+(* A literal is either of form A or ¬A *)
+type literal =
+   | Literal        of identifier
+   | NegatedLiteral of identifier
+
+(* A clause is a disjunction over literals: *)
+(* ¬K_1, ..., ¬K_m, L_1, ..., ¬L_n          *)
+type clause = literal list
+
+(* Helper function for mapping over every term in a formula *)
 val mapf : (formula -> formula) -> formula -> formula
